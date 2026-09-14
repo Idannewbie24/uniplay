@@ -98,9 +98,8 @@ class OrderStatusTest extends TestCase
             'match_id'        => \App\Models\GameMatch::factory()->create()->id,
             'venue_zone_id'   => \App\Models\VenueZone::create([
                 'venue_id'    => \App\Models\Venue::factory()->create()->id,
-                'name'        => 'Zone Alpha',
+                'name'        => 'vip',
             ])->id,
-            'tier_name'       => 'Regular',
             'price'           => 50000,
             'seats_total'     => 100,
             'seats_remaining' => 80,

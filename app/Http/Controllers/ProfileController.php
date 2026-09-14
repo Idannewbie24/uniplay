@@ -7,6 +7,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -35,6 +37,36 @@ class ProfileController extends Controller
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    /**
+     * Update the user's profile photograph.
+     */
+    public function updateAvatar(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'avatar' => ['required', 'image', 'mimes:jpg,jpeg,png,webp,gif', 'max:2048'],
+        ]);
+
+        $user = $request->user();
+
+        if ($request->hasFile('avatar')) {
+            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+
+            $file = $request->file('avatar');
+            $extension = $file->getClientOriginalExtension() ?: 'jpg';
+            $path = $file->storeAs(
+                'avatars',
+                $user->id . '-' . Str::random(16) . '.' . $extension,
+                'public'
+            );
+            $user->avatar = $path;
+            $user->save();
+        }
+
+        return Redirect::route('profile.edit')->with('status', 'avatar-updated');
     }
 
     /**

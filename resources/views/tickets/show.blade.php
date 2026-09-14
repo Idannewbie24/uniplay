@@ -128,12 +128,12 @@
                     {{-- Tier Info --}}
                     <div class="flex-1">
                       <div class="flex items-center gap-2 mb-1">
-                        <h3 class="font-display font-bold text-text-primary uppercase">{{ $batch->tier_name }}</h3>
+                        <h3 class="font-display font-bold text-text-primary uppercase">{{ $zoneName ? strtoupper($zoneName) : 'General Admission' }}</h3>
                         <span class="px-2 py-0.5 rounded text-[9px] font-mono uppercase
-                          {{ str_contains($zoneName, 'Alpha') ? 'bg-primary/10 text-primary border border-primary/30' : '' }}
-                          {{ str_contains($zoneName, 'Bravo') ? 'bg-secondary/10 text-secondary border border-secondary/30' : '' }}
-                          {{ str_contains($zoneName, 'Charlie') ? 'bg-tertiary/10 text-tertiary border border-tertiary/30' : '' }}
-                          {{ !str_contains($zoneName, 'Alpha') && !str_contains($zoneName, 'Bravo') && !str_contains($zoneName, 'Charlie') ? 'bg-surface-elevated text-text-dim border border-border-hairline' : '' }}
+                          {{ $zoneName === 'vip' ? 'bg-primary/10 text-primary border border-primary/30' : '' }}
+                          {{ $zoneName === 'front' ? 'bg-secondary/10 text-secondary border border-secondary/30' : '' }}
+                          {{ $zoneName === 'middle' ? 'bg-tertiary/10 text-tertiary border border-tertiary/30' : '' }}
+                          {{ $zoneName === 'upper' ? 'bg-surface-elevated text-text-dim border border-border-hairline' : '' }}
                         ">
                           {{ $zoneName }}
                         </span>

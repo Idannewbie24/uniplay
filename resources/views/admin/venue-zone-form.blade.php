@@ -37,9 +37,13 @@
 
             <div>
                 <label for="name" class="block text-xs font-semibold uppercase tracking-wider text-text-muted mb-1.5">Zone Name</label>
-                <input type="text" id="name" name="name" value="{{ old('name', $venueZone->name ?? '') }}" required
-                       class="w-full px-4 py-2.5 bg-surface-elevated border border-border-hairline rounded-lg text-sm text-text-primary placeholder-text-dim focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all"
-                       placeholder="e.g. Zone Alpha">
+                <select id="name" name="name" required
+                        class="w-full px-4 py-2.5 bg-surface-elevated border border-border-hairline rounded-lg text-sm text-text-primary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all">
+                    <option value="vip" @selected((old('name', $venueZone->name ?? 'vip')) === 'vip')>VIP</option>
+                    <option value="front" @selected((old('name', $venueZone->name ?? 'vip')) === 'front')>Front</option>
+                    <option value="middle" @selected((old('name', $venueZone->name ?? 'vip')) === 'middle')>Middle</option>
+                    <option value="upper" @selected((old('name', $venueZone->name ?? 'vip')) === 'upper')>Upper</option>
+                </select>
                 @error('name') <p class="mt-1 text-xs text-primary">{{ $message }}</p> @enderror
             </div>
         </div>

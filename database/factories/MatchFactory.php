@@ -26,8 +26,6 @@ class MatchFactory extends Factory
             'status' => $status,
             'score_a' => $status === 'finished' ? fake()->numberBetween(0, 3) : ($status === 'live' ? fake()->numberBetween(0, 2) : 0),
             'score_b' => $status === 'finished' ? fake()->numberBetween(0, 3) : ($status === 'live' ? fake()->numberBetween(0, 2) : 0),
-            'stream_url' => fake()->optional(0.8)->url(),
-            'current_map' => $status === 'live' ? fake()->randomElement(['Ascent', 'Haven', 'Bind', 'Mirage', 'Dust2', 'Land of Dawn']) : null,
             'is_featured' => false,
         ];
     }
@@ -48,7 +46,6 @@ class MatchFactory extends Factory
             'scheduled_at' => now()->subMinutes(45),
             'score_a' => fake()->numberBetween(1, 2),
             'score_b' => fake()->numberBetween(0, 2),
-            'current_map' => fake()->randomElement(['Ascent', 'Haven', 'Bind', 'Mirage', 'Dust2']),
         ]);
     }
 

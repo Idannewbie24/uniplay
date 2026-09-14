@@ -42,13 +42,7 @@
             @error('label') <p class="mt-1 text-xs text-primary">{{ $message }}</p> @enderror
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div>
-                <label for="base_amount" class="block text-xs font-semibold uppercase tracking-wider text-text-muted mb-1.5">Base Amount</label>
-                <input type="number" id="base_amount" name="base_amount" min="0" value="{{ old('base_amount', $denomination->base_amount ?? '') }}"
-                       class="w-full px-4 py-2.5 bg-surface-elevated border border-border-hairline rounded-lg text-sm text-text-primary placeholder-text-dim focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all"
-                       placeholder="e.g. 179">
-            </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
                 <label for="bonus_amount" class="block text-xs font-semibold uppercase tracking-wider text-text-muted mb-1.5">Bonus Amount</label>
                 <input type="number" id="bonus_amount" name="bonus_amount" min="0" value="{{ old('bonus_amount', $denomination->bonus_amount ?? '') }}"
@@ -64,19 +58,15 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div>
-                <label for="badge" class="block text-xs font-semibold uppercase tracking-wider text-text-muted mb-1.5">Badge</label>
-                <input type="text" id="badge" name="badge" value="{{ old('badge', $denomination->badge ?? '') }}"
-                       class="w-full px-4 py-2.5 bg-surface-elevated border border-border-hairline rounded-lg text-sm text-text-primary placeholder-text-dim focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all"
-                       placeholder="e.g. BEST VALUE">
-            </div>
-            <div>
-                <label for="type" class="block text-xs font-semibold uppercase tracking-wider text-text-muted mb-1.5">Type</label>
-                <input type="text" id="type" name="type" value="{{ old('type', $denomination->type ?? '') }}"
-                       class="w-full px-4 py-2.5 bg-surface-elevated border border-border-hairline rounded-lg text-sm text-text-primary placeholder-text-dim focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all"
-                       placeholder="e.g. diamonds / weekly_pass / points">
-            </div>
+        <div>
+            <label for="type" class="block text-xs font-semibold uppercase tracking-wider text-text-muted mb-1.5">Type</label>
+            <select id="type" name="type"
+                    class="w-full px-4 py-2.5 bg-surface-elevated border border-border-hairline rounded-lg text-sm text-text-primary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all">
+                <option value="diamonds" @selected((old('type', $denomination->type ?? 'diamonds')) === 'diamonds')>Diamonds</option>
+                <option value="weekly_pass" @selected((old('type', $denomination->type ?? 'diamonds')) === 'weekly_pass')>Weekly Pass</option>
+                <option value="points" @selected((old('type', $denomination->type ?? 'diamonds')) === 'points')>Points</option>
+            </select>
+            @error('type') <p class="mt-1 text-xs text-primary">{{ $message }}</p> @enderror
         </div>
 
         <div class="flex items-center justify-between pt-4 border-t border-border-hairline">

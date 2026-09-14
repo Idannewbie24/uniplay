@@ -18,7 +18,6 @@ class TicketBatchFactory extends Factory
         return [
             'match_id' => GameMatch::factory(),
             'venue_zone_id' => VenueZone::factory(),
-            'tier_name' => fake()->randomElement(['VIP', 'Grandstand', 'Regular', 'Economy']),
             'price' => fake()->randomFloat(2, 25000, 250000),
             'seats_total' => $total,
             'seats_remaining' => fake()->numberBetween(0, $total),

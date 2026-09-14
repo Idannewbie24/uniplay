@@ -12,7 +12,7 @@ class TicketBatch extends Model
     use HasFactory;
 
     protected $fillable = [
-        'match_id', 'venue_zone_id', 'tier_name', 'price',
+        'match_id', 'venue_zone_id', 'price',
         'seats_total', 'seats_remaining', 'status_badge',
     ];
 

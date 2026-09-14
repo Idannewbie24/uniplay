@@ -19,11 +19,9 @@ class TopupDenominationFactory extends Factory
         return [
             'topup_product_id' => TopupProduct::factory(),
             'label' => $base . ' Diamonds',
-            'base_amount' => $base,
             'bonus_amount' => $bonus,
             'price' => round($price, 2),
-            'badge' => null,
-            'type' => 'diamond',
+            'type' => fake()->randomElement(['diamonds', 'weekly_pass', 'points']),
         ];
     }
 }

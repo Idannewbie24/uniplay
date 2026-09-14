@@ -11,8 +11,8 @@ class TopupDenomination extends Model
     use HasFactory;
 
     protected $fillable = [
-        'topup_product_id', 'label', 'base_amount', 'bonus_amount',
-        'price', 'badge', 'type',
+        'topup_product_id', 'label', 'bonus_amount',
+        'price', 'type',
     ];
 
     protected function casts(): array

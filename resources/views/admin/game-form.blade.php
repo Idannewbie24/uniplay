@@ -52,9 +52,12 @@
             {{-- Category --}}
             <div>
                 <label for="category" class="block text-xs font-semibold uppercase tracking-wider text-text-muted mb-1.5">Category</label>
-                <input type="text" id="category" name="category" value="{{ old('category', $game->category ?? '') }}"
-                       class="w-full px-4 py-2.5 bg-surface-elevated border border-border-hairline rounded-lg text-sm text-text-primary placeholder-text-dim focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all"
-                       placeholder="e.g. FPS, MOBA, Battle Royale">
+                <select id="category" name="category"
+                        class="w-full px-4 py-2.5 bg-surface-elevated border border-border-hairline rounded-lg text-sm text-text-primary placeholder-text-dim focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all">
+                    <option value="mobile" @selected((old('category', $game->category ?? 'mobile')) === 'mobile')>Mobile</option>
+                    <option value="pc" @selected((old('category', $game->category ?? 'mobile')) === 'pc')>PC</option>
+                    <option value="console" @selected((old('category', $game->category ?? 'mobile')) === 'console')>Console</option>
+                </select>
                 @error('category') <p class="mt-1 text-xs text-primary">{{ $message }}</p> @enderror
             </div>
         </div>

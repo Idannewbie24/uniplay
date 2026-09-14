@@ -22,7 +22,7 @@ class TicketBatchObserver
         NotificationService::notifyAll(
             'ticket',
             'New Tickets Available',
-            $batch->tier_name.' for '.$label.' — '.$batch->seats_remaining.' seats left',
+            ($batch->venueZone->name ? strtoupper($batch->venueZone->name) : 'General Admission').' tickets for '.$label.' — '.$batch->seats_remaining.' seats left',
             $match ? route('tickets.show', $match) : route('tickets.index')
         );
     }

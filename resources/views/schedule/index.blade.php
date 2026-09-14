@@ -163,20 +163,7 @@
                       <span class="inline-flex items-center px-3 py-1.5 rounded-lg bg-surface-elevated border border-border-hairline text-text-dim text-xs font-mono uppercase">
                         {{ ucfirst($match->status) }}
                       </span>
-                    @endif
-                  </div>
-
-                  {{-- Stream Link --}}
-                  @if($match->stream_url)
-                    <a
-                      href="{{ $match->stream_url }}"
-                      target="_blank"
-                      class="flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary/10 border border-primary/30 text-primary text-xs font-mono uppercase hover:bg-primary hover:text-white transition-all duration-200"
-                    >
-                      <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                      Stream
-                    </a>
-                  @endif
+@endif
                 </div>
               </div>
             @endforeach

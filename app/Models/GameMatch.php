@@ -20,7 +20,7 @@ class GameMatch extends Model
     protected $fillable = [
         'tournament_id', 'team_a_id', 'team_b_id', 'venue_id',
         'scheduled_at', 'status', 'score_a', 'score_b',
-        'stream_url', 'current_map', 'is_featured',
+        'is_featured',
     ];
 
     protected function casts(): array

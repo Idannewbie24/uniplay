@@ -27,7 +27,6 @@
                         <th class="px-5 py-3 text-center text-[10px] font-semibold uppercase tracking-widest text-text-dim">Team A</th>
                         <th class="px-5 py-3 text-center text-[10px] font-semibold uppercase tracking-widest text-text-dim">Score</th>
                         <th class="px-5 py-3 text-center text-[10px] font-semibold uppercase tracking-widest text-text-dim">Team B</th>
-                        <th class="px-5 py-3 text-center text-[10px] font-semibold uppercase tracking-widest text-text-dim">Map</th>
                         <th class="px-5 py-3 text-center text-[10px] font-semibold uppercase tracking-widest text-text-dim">Status</th>
                         <th class="px-5 py-3 text-center text-[10px] font-semibold uppercase tracking-widest text-text-dim">Featured</th>
                         <th class="px-5 py-3 text-right text-[10px] font-semibold uppercase tracking-widest text-text-dim">Actions</th>
@@ -51,7 +50,6 @@
                                 <span class="font-mono font-semibold text-text-primary text-xs">{{ $match->teamB->tag ?? '?' }}</span>
                                 <span class="block text-text-dim text-[10px]">{{ $match->teamB->name ?? '' }}</span>
                             </td>
-                            <td class="px-5 py-3 text-center font-mono text-xs text-text-muted">{{ $match->current_map ?? '—' }}</td>
                             <td class="px-5 py-3 text-center">
                                 @php
                                     $statusColors = [
@@ -115,7 +113,7 @@
 
                         {{-- Inline Score Update Form --}}
                         <tr x-show="scoreModal === {{ $match->id }}" x-transition x-cloak>
-                            <td colspan="9" class="px-5 py-4 bg-surface-elevated">
+                            <td colspan="8" class="px-5 py-4 bg-surface-elevated">
                                 <form action="{{ route('admin.matches.score', $match) }}" method="POST" class="flex flex-wrap items-end gap-4">
                                     @csrf
                                     @method('PATCH')
@@ -137,13 +135,6 @@
                                     </div>
 
                                     <div>
-                                        <label class="block text-[10px] font-semibold uppercase tracking-widest text-text-dim mb-1">Map</label>
-                                        <input type="text" name="current_map" value="{{ $match->current_map ?? '' }}"
-                                               placeholder="e.g. Ascent"
-                                               class="w-32 px-3 py-2 bg-surface-card border border-border-hairline rounded-lg text-sm text-text-primary font-mono placeholder-text-dim focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary/30 transition-all">
-                                    </div>
-
-                                    <div>
                                         <label class="block text-[10px] font-semibold uppercase tracking-widest text-text-dim mb-1">Status</label>
                                         <select name="status"
                                                 class="px-3 py-2 bg-surface-card border border-border-hairline rounded-lg text-sm text-text-primary focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary/30 transition-all">
@@ -161,7 +152,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="9" class="px-5 py-12 text-center text-text-muted text-sm">No matches found.</td>
+                            <td colspan="8" class="px-5 py-12 text-center text-text-muted text-sm">No matches found.</td>
                         </tr>
                     @endforelse
                 </tbody>

@@ -8,6 +8,8 @@
 
     <title>@yield('title', config('app.name', 'UniPlay'))</title>
 
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -61,10 +63,10 @@
     {{-- Header --}}
     <header class="sticky top-0 z-50 bg-surface-elevated/95 backdrop-blur-md border-b border-border-hairline">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
+            <div class="flex items-center h-16">
 
                 {{-- Logo + Live Badge --}}
-                <div class="flex items-center gap-3 lg:me-8">
+                <div class="flex items-center gap-3 lg:me-6">
                     <a href="{{ route('home') }}" class="flex items-center gap-2">
                         <span class="font-display uppercase tracking-wider text-primary font-bold text-xl">UNIPLAY</span>
                     </a>
@@ -80,7 +82,7 @@
                 </div>
 
                 {{-- Desktop Navigation --}}
-                <nav class="hidden md:flex items-center gap-1 lg:gap-2 lg:mx-2 px-2 py-1 rounded-xl bg-surface-card/60">
+                <nav class="hidden md:flex items-center gap-1 lg:gap-1.5 px-2 py-1 rounded-xl bg-surface-card/60">
                     @php
                         $navLinks = [
                             ['label' => 'Home', 'route' => 'home', 'active' => 'home'],
@@ -120,7 +122,7 @@
                         }
                     }
                 @endphp
-                <div class="flex items-center gap-2 sm:gap-3 lg:gap-4 lg:ms-6 lg:me-4">
+                <div class="flex items-center gap-2 sm:gap-3 lg:gap-3 ms-auto lg:ps-6 lg:border-s lg:border-border-hairline">
 
                     {{-- Search Bar --}}
                     <form action="{{ route('search') }}" method="GET" class="hidden lg:flex items-center" x-data="{ focused: false }">
@@ -192,15 +194,8 @@
                     </div>
                     @endauth
 
-                    {{-- Auth Buttons: Sign In + (Sign Out when logged in) --}}
+                    {{-- Auth Buttons: Sign In + Sign Out + Profile Round (photo at far end) --}}
                     @auth
-                        <a href="{{ route('home') }}"
-                           class="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-surface-card border border-border-hairline rounded-lg text-sm font-medium text-text-primary hover:border-primary/50 transition-colors cursor-pointer">
-                            <span class="relative flex h-7 w-7 items-center justify-center rounded-full bg-primary/20 text-primary text-xs font-bold uppercase">
-                                {{ substr(auth()->user()->name, 0, 1) }}
-                            </span>
-                            Sign In
-                        </a>
                         <form method="POST" action="{{ route('logout') }}" class="hidden sm:block">
                             @csrf
                             <button type="submit"
@@ -211,6 +206,19 @@
                                 Sign Out
                             </button>
                         </form>
+                        <a href="{{ route('profile.edit') }}"
+                           class="hidden sm:inline-flex items-center gap-2 px-2 py-1.5 bg-surface-card border border-border-hairline rounded-full text-sm font-medium text-text-primary hover:border-primary/50 transition-colors cursor-pointer">
+                            <span class="relative flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white text-xs font-bold uppercase overflow-hidden shrink-0">
+                                @if(auth()->user()->avatar)
+                                    <img src="{{ asset('storage/' . auth()->user()->avatar) }}?v={{ auth()->user()->updated_at?->timestamp }}" alt="{{ auth()->user()->name }}" class="h-full w-full object-cover">
+                                @else
+                                    {{ substr(auth()->user()->name, 0, 1) }}
+                                @endif
+                            </span>
+                            <span class="hidden lg:block font-semibold max-w-[120px] truncate">
+                                {{ \Illuminate\Support\Str::before(auth()->user()->name, ' ') ?: auth()->user()->name }}
+                            </span>
+                        </a>
                     @else
                         <a href="{{ route('login') }}"
                            class="hidden sm:inline-flex items-center gap-2 px-5 py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors cursor-pointer">
@@ -264,8 +272,15 @@
                 @endforeach
                 <div class="pt-2 mt-2 border-t border-border-hairline space-y-1">
                     @auth
-                        <a href="{{ route('home') }}" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-primary bg-primary/10">
-                            Sign In
+                        <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-primary bg-primary/10">
+                            <span class="relative flex h-9 w-9 items-center justify-center rounded-full bg-primary/20 text-primary text-sm font-bold uppercase overflow-hidden shrink-0">
+                                @if(auth()->user()->avatar)
+                                    <img src="{{ asset('storage/' . auth()->user()->avatar) }}?v={{ auth()->user()->updated_at?->timestamp }}" alt="{{ auth()->user()->name }}" class="h-full w-full object-cover">
+                                @else
+                                    {{ substr(auth()->user()->name, 0, 1) }}
+                                @endif
+                            </span>
+                            <span class="font-semibold truncate">{{ auth()->user()->name }}</span>
                         </a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

@@ -48,14 +48,6 @@
                 </select>
                 @error('venue_zone_id') <p class="mt-1 text-xs text-primary">{{ $message }}</p> @enderror
             </div>
-
-            <div>
-                <label for="tier_name" class="block text-xs font-semibold uppercase tracking-wider text-text-muted mb-1.5">Tier Name</label>
-                <input type="text" id="tier_name" name="tier_name" value="{{ old('tier_name', $ticketBatch->tier_name ?? '') }}" required
-                       class="w-full px-4 py-2.5 bg-surface-elevated border border-border-hairline rounded-lg text-sm text-text-primary placeholder-text-dim focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all"
-                       placeholder="e.g. VIP Standard">
-                @error('tier_name') <p class="mt-1 text-xs text-primary">{{ $message }}</p> @enderror
-            </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">

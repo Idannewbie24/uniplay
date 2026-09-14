@@ -128,26 +128,6 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {{-- Stream URL --}}
-            <div>
-                <label for="stream_url" class="block text-xs font-semibold uppercase tracking-wider text-text-muted mb-1.5">Stream URL</label>
-                <input type="url" id="stream_url" name="stream_url" value="{{ old('stream_url', $match->stream_url ?? '') }}"
-                       class="w-full px-4 py-2.5 bg-surface-elevated border border-border-hairline rounded-lg text-sm text-text-primary placeholder-text-dim focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all"
-                       placeholder="https://twitch.tv/...">
-                @error('stream_url') <p class="mt-1 text-xs text-primary">{{ $message }}</p> @enderror
-            </div>
-
-            {{-- Current Map --}}
-            <div>
-                <label for="current_map" class="block text-xs font-semibold uppercase tracking-wider text-text-muted mb-1.5">Current Map</label>
-                <input type="text" id="current_map" name="current_map" value="{{ old('current_map', $match->current_map ?? '') }}"
-                       class="w-full px-4 py-2.5 bg-surface-elevated border border-border-hairline rounded-lg text-sm text-text-primary placeholder-text-dim focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 transition-all"
-                       placeholder="e.g. Bind, Ascent">
-                @error('current_map') <p class="mt-1 text-xs text-primary">{{ $message }}</p> @enderror
-            </div>
-        </div>
-
         {{-- Is Featured --}}
         <div>
             <label class="flex items-center gap-3 cursor-pointer">

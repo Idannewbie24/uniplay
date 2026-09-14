@@ -24,7 +24,6 @@
                     <tr class="border-b border-border-hairline">
                         <th class="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-text-dim">ID</th>
                         <th class="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-text-dim">Match</th>
-                        <th class="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-text-dim">Tier</th>
                         <th class="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-text-dim">Zone</th>
                         <th class="px-5 py-3 text-right text-[10px] font-semibold uppercase tracking-widest text-text-dim">Price</th>
                         <th class="px-5 py-3 text-center text-[10px] font-semibold uppercase tracking-widest text-text-dim">Seats</th>
@@ -42,7 +41,6 @@
                                 </p>
                                 <p class="text-text-dim text-[10px] font-mono">{{ $batch->match->tournament->name ?? '' }}</p>
                             </td>
-                            <td class="px-5 py-3 font-medium text-text-primary">{{ $batch->tier_name }}</td>
                             <td class="px-5 py-3 text-text-muted text-xs">{{ $batch->venueZone->name ?? '—' }}</td>
                             <td class="px-5 py-3 text-right font-mono font-semibold text-primary">Rp {{ number_format($batch->price, 0, ',', '.') }}</td>
                             <td class="px-5 py-3 text-center">

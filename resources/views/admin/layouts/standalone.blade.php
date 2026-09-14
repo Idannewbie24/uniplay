@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Admin Panel — UniPlay')</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,9 +18,21 @@
 
     {{-- Sidebar --}}
     <aside class="hidden lg:flex flex-col w-64 shrink-0 bg-surface-elevated border-r border-border-hairline sticky top-0 h-screen">
-        <div class="flex items-center justify-between px-5 py-4 border-b border-border-hairline">
-            <div class="flex items-center gap-2">
-                <span class="font-display text-sm font-bold uppercase tracking-wider text-primary">Admin</span>
+        <div class="px-5 py-4 border-b border-border-hairline">
+            <div class="flex items-center gap-3">
+                <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20 text-primary font-display font-bold uppercase">
+                    @if(auth()->check() && auth()->user()->avatar)
+                        <img src="{{ asset('storage/' . auth()->user()->avatar) }}?v={{ auth()->user()->updated_at?->timestamp }}" alt="Admin" class="h-full w-full object-cover rounded-full">
+                    @else
+                        {{ auth()->check() ? substr(auth()->user()->name, 0, 1) : 'A' }}
+                    @endif
+                </span>
+                <div class="flex flex-col leading-tight">
+                    <span class="font-display text-xl font-bold uppercase tracking-wider text-primary">Admin</span>
+                    <span class="text-sm font-semibold text-text-secondary">
+                        @auth{{ auth()->user()->name }}@else — @endauth
+                    </span>
+                </div>
             </div>
         </div>
 
@@ -91,6 +104,30 @@
                 @endforeach
             </div>
         </nav>
+
+        {{-- Sidebar Bottom: Sign In / Sign Out --}}
+        <div class="px-3 py-4 border-t border-border-hairline">
+            @auth
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                            class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-text-secondary hover:text-primary hover:bg-surface-card transition-colors cursor-pointer">
+                        <svg class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                        <span>Sign Out</span>
+                    </button>
+                </form>
+            @else
+                <a href="{{ route('login') }}"
+                   class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-text-secondary hover:text-primary hover:bg-surface-card transition-colors">
+                    <svg class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                    </svg>
+                    <span>Sign In</span>
+                </a>
+            @endauth
+        </div>
     </aside>
 
     {{-- Main --}}
@@ -165,35 +202,6 @@
         {{-- Content --}}
         <div class="p-6">
             @yield('admin.content')
-        </div>
-
-        {{-- Bottom Auth Buttons --}}
-        <div class="px-6 pb-6">
-            <div class="border-t border-border-hairline pt-6 flex items-center justify-between">
-                <span class="font-display text-xs font-bold uppercase tracking-wider text-text-dim">Session</span>
-                <div class="flex items-center gap-3">
-                    @auth
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit"
-                                    class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors cursor-pointer">
-                                <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                </svg>
-                                Sign Out
-                            </button>
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}"
-                           class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors cursor-pointer">
-                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                            </svg>
-                            Sign In
-                        </a>
-                    @endauth
-                </div>
-            </div>
         </div>
     </div>
 </div>

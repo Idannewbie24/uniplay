@@ -183,17 +183,12 @@
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
             @foreach($product->denominations as $denom)
               <button
-                @click="selectedDenom = {{ $denom->id }}; selectedPrice = {{ $denom->price }}; selectedLabel = '{{ $denom->label }}'; selectedBase = '{{ $denom->base_amount }}'; selectedBonus = '{{ $denom->bonus_amount ?? 0 }}'"
+                @click="selectedDenom = {{ $denom->id }}; selectedPrice = {{ $denom->price }}; selectedLabel = '{{ $denom->label }}'; selectedBonus = '{{ $denom->bonus_amount ?? 0 }}'"
                 :class="selectedDenom === {{ $denom->id }}
                   ? 'border-primary bg-primary/10 shadow-lg shadow-primary/10'
                   : 'border-border-hairline hover:border-border-elevated bg-surface-elevated'"
                 class="relative p-4 rounded-xl border text-left transition-all duration-200"
               >
-                {{-- Best Value Badge --}}
-                @if(($denom->badge ?? '') === 'BEST VALUE')
-                  <span class="absolute -top-2.5 right-3 px-2 py-0.5 rounded bg-secondary text-black text-[9px] font-mono font-bold uppercase">Best Value</span>
-                @endif
-
                 <p class="font-display font-bold text-text-primary text-base">{{ $denom->label }}</p>
                 <div class="mt-1">
                   <span class="text-text-muted text-xs font-mono line-through">+{{ $denom->bonus_amount ?? 0 }} bonus</span>
@@ -289,8 +284,8 @@
                 <span class="text-text-primary font-mono" x-text="selectedLabel || '—'">—</span>
               </div>
               <div class="flex justify-between text-sm">
-                <span class="text-text-dim font-mono">Amount</span>
-                <span class="text-text-primary font-mono" x-text="selectedBase ? (selectedBase + ' + ' + selectedBonus + ' bonus') : '—'">—</span>
+                <span class="text-text-dim font-mono">Bonus</span>
+                <span class="text-text-primary font-mono" x-text="selectedBonus ? ('+ ' + selectedBonus + ' bonus') : '—'">—</span>
               </div>
             </div>
 
@@ -369,7 +364,6 @@ function topupDetail() {
     selectedDenom: null,
     selectedPrice: null,
     selectedLabel: '',
-    selectedBase: '',
     selectedBonus: '',
     verifyAccount() {
       this.verifying = true;

@@ -26,8 +26,6 @@ class MatchSeeder extends Seeder
                 'status' => 'upcoming',
                 'score_a' => 0,
                 'score_b' => 0,
-                'stream_url' => 'https://twitch.tv/uniplay',
-                'current_map' => null,
                 'is_featured' => true,
             ],
             [
@@ -39,8 +37,6 @@ class MatchSeeder extends Seeder
                 'status' => 'live',
                 'score_a' => 2,
                 'score_b' => 1,
-                'stream_url' => 'https://twitch.tv/uniplay',
-                'current_map' => 'Ascent',
                 'is_featured' => false,
             ],
             [
@@ -52,8 +48,6 @@ class MatchSeeder extends Seeder
                 'status' => 'finished',
                 'score_a' => 3,
                 'score_b' => 2,
-                'stream_url' => null,
-                'current_map' => null,
                 'is_featured' => false,
             ],
             [
@@ -65,8 +59,6 @@ class MatchSeeder extends Seeder
                 'status' => 'finished',
                 'score_a' => 1,
                 'score_b' => 3,
-                'stream_url' => null,
-                'current_map' => null,
                 'is_featured' => false,
             ],
             [
@@ -78,8 +70,6 @@ class MatchSeeder extends Seeder
                 'status' => 'upcoming',
                 'score_a' => 0,
                 'score_b' => 0,
-                'stream_url' => 'https://youtube.com/@uniplay',
-                'current_map' => null,
                 'is_featured' => false,
             ],
             [
@@ -91,8 +81,6 @@ class MatchSeeder extends Seeder
                 'status' => 'upcoming',
                 'score_a' => 0,
                 'score_b' => 0,
-                'stream_url' => null,
-                'current_map' => null,
                 'is_featured' => false,
             ],
             [
@@ -104,8 +92,6 @@ class MatchSeeder extends Seeder
                 'status' => 'upcoming',
                 'score_a' => 0,
                 'score_b' => 0,
-                'stream_url' => 'https://twitch.tv/uniplay',
-                'current_map' => null,
                 'is_featured' => false,
             ],
             [
@@ -117,8 +103,6 @@ class MatchSeeder extends Seeder
                 'status' => 'finished',
                 'score_a' => 2,
                 'score_b' => 0,
-                'stream_url' => null,
-                'current_map' => null,
                 'is_featured' => false,
             ],
         ];

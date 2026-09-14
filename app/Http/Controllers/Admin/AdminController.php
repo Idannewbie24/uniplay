@@ -76,7 +76,7 @@ class AdminController extends Controller
             'name'      => 'required|string|max:255',
             'slug'      => 'required|string|max:255|unique:games,slug',
             'publisher' => 'nullable|string|max:255',
-            'category'  => 'nullable|string|max:255',
+            'category'  => 'nullable|in:mobile,pc,console',
             'icon'      => 'nullable|image|max:2048',
             'banner'    => 'nullable|image|max:4096',
         ]);
@@ -104,7 +104,7 @@ class AdminController extends Controller
             'name'      => 'required|string|max:255',
             'slug'      => 'required|string|max:255|unique:games,slug,' . $game->id,
             'publisher' => 'nullable|string|max:255',
-            'category'  => 'nullable|string|max:255',
+            'category'  => 'nullable|in:mobile,pc,console',
             'icon'      => 'nullable|image|max:2048',
             'banner'    => 'nullable|image|max:4096',
         ]);
@@ -323,8 +323,6 @@ class AdminController extends Controller
             'status'        => 'nullable|in:upcoming,live,finished,cancelled',
             'score_a'       => 'nullable|integer|min:0',
             'score_b'       => 'nullable|integer|min:0',
-            'stream_url'    => 'nullable|url|max:500',
-            'current_map'   => 'nullable|string|max:100',
             'is_featured'   => 'nullable|boolean',
         ]);
 
@@ -358,8 +356,6 @@ class AdminController extends Controller
             'status'        => 'nullable|in:upcoming,live,finished,cancelled',
             'score_a'       => 'nullable|integer|min:0',
             'score_b'       => 'nullable|integer|min:0',
-            'stream_url'    => 'nullable|url|max:500',
-            'current_map'   => 'nullable|string|max:100',
             'is_featured'   => 'nullable|boolean',
         ]);
 
@@ -386,7 +382,6 @@ class AdminController extends Controller
         $validated = $request->validate([
             'score_a'     => 'required|integer|min:0',
             'score_b'     => 'required|integer|min:0',
-            'current_map' => 'nullable|string|max:100',
             'status'      => 'nullable|in:live,finished',
         ]);
 
@@ -922,7 +917,7 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'venue_id'    => 'required|exists:venues,id',
-            'name'        => 'required|string|max:255',
+            'name'        => 'required|in:vip,front,middle,upper',
             'description' => 'nullable|string|max:500',
         ]);
 
@@ -942,7 +937,7 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'venue_id'    => 'required|exists:venues,id',
-            'name'        => 'required|string|max:255',
+            'name'        => 'required|in:vip,front,middle,upper',
             'description' => 'nullable|string|max:500',
         ]);
 
@@ -985,7 +980,6 @@ class AdminController extends Controller
         $validated = $request->validate([
             'match_id'       => 'required|exists:matches,id',
             'venue_zone_id'  => 'nullable|exists:venue_zones,id',
-            'tier_name'      => 'required|string|max:255',
             'price'          => 'required|numeric|min:0',
             'seats_total'    => 'required|integer|min:1',
             'status_badge'   => 'nullable|in:available,limited_seats,selling_fast',
@@ -1015,7 +1009,6 @@ class AdminController extends Controller
         $validated = $request->validate([
             'match_id'       => 'required|exists:matches,id',
             'venue_zone_id'  => 'nullable|exists:venue_zones,id',
-            'tier_name'      => 'required|string|max:255',
             'price'          => 'required|numeric|min:0',
             'seats_total'    => 'required|integer|min:1',
             'seats_remaining' => 'nullable|integer|min:0',
@@ -1064,11 +1057,9 @@ class AdminController extends Controller
         $validated = $request->validate([
             'topup_product_id' => 'required|exists:topup_products,id',
             'label'            => 'required|string|max:255',
-            'base_amount'      => 'nullable|integer|min:0',
             'bonus_amount'     => 'nullable|integer|min:0',
             'price'            => 'required|numeric|min:0',
-            'badge'            => 'nullable|string|max:100',
-            'type'             => 'nullable|string|max:100',
+            'type'             => 'nullable|in:diamonds,weekly_pass,points',
         ]);
 
         TopupDenomination::create($validated);
@@ -1088,11 +1079,9 @@ class AdminController extends Controller
         $validated = $request->validate([
             'topup_product_id' => 'required|exists:topup_products,id',
             'label'            => 'required|string|max:255',
-            'base_amount'      => 'nullable|integer|min:0',
             'bonus_amount'     => 'nullable|integer|min:0',
             'price'            => 'required|numeric|min:0',
-            'badge'            => 'nullable|string|max:100',
-            'type'             => 'nullable|string|max:100',
+            'type'             => 'nullable|in:diamonds,weekly_pass,points',
         ]);
 
         $denomination->update($validated);

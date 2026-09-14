@@ -25,10 +25,9 @@
                         <th class="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-text-dim">ID</th>
                         <th class="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-text-dim">Product</th>
                         <th class="px-5 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-text-dim">Label</th>
-                        <th class="px-5 py-3 text-center text-[10px] font-semibold uppercase tracking-widest text-text-dim">Amount</th>
                         <th class="px-5 py-3 text-center text-[10px] font-semibold uppercase tracking-widest text-text-dim">Bonus</th>
                         <th class="px-5 py-3 text-right text-[10px] font-semibold uppercase tracking-widest text-text-dim">Price</th>
-                        <th class="px-5 py-3 text-center text-[10px] font-semibold uppercase tracking-widest text-text-dim">Badge</th>
+                        <th class="px-5 py-3 text-center text-[10px] font-semibold uppercase tracking-widest text-text-dim">Type</th>
                         <th class="px-5 py-3 text-right text-[10px] font-semibold uppercase tracking-widest text-text-dim">Actions</th>
                     </tr>
                 </thead>
@@ -41,15 +40,10 @@
                                 <p class="text-text-dim text-[10px] font-mono">{{ $denom->product->game->name ?? '' }}</p>
                             </td>
                             <td class="px-5 py-3 font-medium text-text-primary">{{ $denom->label }}</td>
-                            <td class="px-5 py-3 text-center text-text-muted font-mono">{{ $denom->base_amount ?? '—' }}</td>
                             <td class="px-5 py-3 text-center font-mono {{ $denom->bonus_amount ? 'text-secondary' : 'text-text-muted' }}">{{ $denom->bonus_amount ?: '—' }}</td>
                             <td class="px-5 py-3 text-right font-mono font-semibold text-primary">Rp {{ number_format($denom->price, 0, ',', '.') }}</td>
                             <td class="px-5 py-3 text-center">
-                                @if($denom->badge)
-                                    <span class="inline-flex px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-semibold uppercase">{{ $denom->badge }}</span>
-                                @else
-                                    <span class="text-text-dim">—</span>
-                                @endif
+                                <span class="inline-flex px-2 py-0.5 rounded bg-surface-elevated text-text-muted text-[10px] font-semibold uppercase">{{ $denom->type ?? '—' }}</span>
                             </td>
                             <td class="px-5 py-3">
                                 <div class="flex items-center justify-end gap-2">
@@ -74,7 +68,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="px-5 py-12 text-center text-text-muted text-sm">No denominations found.</td>
+                            <td colspan="6" class="px-5 py-12 text-center text-text-muted text-sm">No denominations found.</td>
                         </tr>
                     @endforelse
                 </tbody>

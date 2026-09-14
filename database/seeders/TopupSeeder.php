@@ -40,12 +40,12 @@ class TopupSeeder extends Seeder
         // MLBB Diamonds denominations
         $mlbbDiamonds = TopupProduct::where('name', 'MLBB Diamonds')->first();
         $diamondDenoms = [
-            ['label' => '56 Diamonds', 'base_amount' => 56, 'bonus_amount' => 0, 'price' => 15000, 'type' => 'diamond'],
-            ['label' => '85 Diamonds', 'base_amount' => 85, 'bonus_amount' => 0, 'price' => 22000, 'type' => 'diamond'],
-            ['label' => '172 Diamonds', 'base_amount' => 172, 'bonus_amount' => 5, 'price' => 43000, 'type' => 'diamond'],
-            ['label' => '257 Diamonds', 'base_amount' => 257, 'bonus_amount' => 10, 'price' => 65000, 'badge' => 'BEST VALUE', 'type' => 'diamond'],
-            ['label' => '568 Diamonds', 'base_amount' => 568, 'bonus_amount' => 25, 'price' => 141000, 'type' => 'diamond'],
-            ['label' => '853 Diamonds', 'base_amount' => 853, 'bonus_amount' => 50, 'price' => 210000, 'badge' => 'MEGA BONUS', 'type' => 'diamond'],
+            ['label' => '56 Diamonds', 'bonus_amount' => 0, 'price' => 15000, 'type' => 'diamonds'],
+            ['label' => '85 Diamonds', 'bonus_amount' => 0, 'price' => 22000, 'type' => 'diamonds'],
+            ['label' => '172 Diamonds', 'bonus_amount' => 5, 'price' => 43000, 'type' => 'diamonds'],
+            ['label' => '257 Diamonds', 'bonus_amount' => 10, 'price' => 65000, 'type' => 'diamonds'],
+            ['label' => '568 Diamonds', 'bonus_amount' => 25, 'price' => 141000, 'type' => 'diamonds'],
+            ['label' => '853 Diamonds', 'bonus_amount' => 50, 'price' => 210000, 'type' => 'diamonds'],
         ];
         foreach ($diamondDenoms as $denom) {
             TopupDenomination::create([...$denom, 'topup_product_id' => $mlbbDiamonds->id]);
@@ -53,16 +53,16 @@ class TopupSeeder extends Seeder
 
         // MLBB Weekly Pass
         $mlbbPass = TopupProduct::where('name', 'MLBB Weekly Pass')->first();
-        TopupDenomination::create(['topup_product_id' => $mlbbPass->id, 'label' => 'Weekly Pass', 'base_amount' => 1, 'bonus_amount' => 0, 'price' => 30000, 'badge' => 'SEASON PASS', 'type' => 'pass']);
-        TopupDenomination::create(['topup_product_id' => $mlbbPass->id, 'label' => 'Monthly Pass', 'base_amount' => 1, 'bonus_amount' => 0, 'price' => 100000, 'badge' => 'BEST VALUE', 'type' => 'pass']);
+        TopupDenomination::create(['topup_product_id' => $mlbbPass->id, 'label' => 'Weekly Pass', 'bonus_amount' => 0, 'price' => 30000, 'type' => 'weekly_pass']);
+        TopupDenomination::create(['topup_product_id' => $mlbbPass->id, 'label' => 'Monthly Pass', 'bonus_amount' => 0, 'price' => 100000, 'type' => 'weekly_pass']);
 
         // Free Fire Diamonds
         $ffDiamonds = TopupProduct::where('name', 'FF Diamonds')->first();
         $ffDenoms = [
-            ['label' => '100 Diamonds', 'base_amount' => 100, 'bonus_amount' => 0, 'price' => 16000, 'type' => 'diamond'],
-            ['label' => '310 Diamonds', 'base_amount' => 310, 'bonus_amount' => 10, 'price' => 47000, 'badge' => 'POPULAR', 'type' => 'diamond'],
-            ['label' => '520 Diamonds', 'base_amount' => 520, 'bonus_amount' => 30, 'price' => 78000, 'type' => 'diamond'],
-            ['label' => '1060 Diamonds', 'base_amount' => 1060, 'bonus_amount' => 60, 'price' => 155000, 'badge' => 'BEST VALUE', 'type' => 'diamond'],
+            ['label' => '100 Diamonds', 'bonus_amount' => 0, 'price' => 16000, 'type' => 'diamonds'],
+            ['label' => '310 Diamonds', 'bonus_amount' => 10, 'price' => 47000, 'type' => 'diamonds'],
+            ['label' => '520 Diamonds', 'bonus_amount' => 30, 'price' => 78000, 'type' => 'diamonds'],
+            ['label' => '1060 Diamonds', 'bonus_amount' => 60, 'price' => 155000, 'type' => 'diamonds'],
         ];
         foreach ($ffDenoms as $denom) {
             TopupDenomination::create([...$denom, 'topup_product_id' => $ffDiamonds->id]);
@@ -70,16 +70,16 @@ class TopupSeeder extends Seeder
 
         // FF Membership
         $ffMembership = TopupProduct::where('name', 'FF Membership')->first();
-        TopupDenomination::create(['topup_product_id' => $ffMembership->id, 'label' => 'Weekly Membership', 'base_amount' => 1, 'bonus_amount' => 0, 'price' => 28000, 'type' => 'pass']);
-        TopupDenomination::create(['topup_product_id' => $ffMembership->id, 'label' => 'Monthly Membership', 'base_amount' => 1, 'bonus_amount' => 0, 'price' => 90000, 'badge' => 'BEST VALUE', 'type' => 'pass']);
+        TopupDenomination::create(['topup_product_id' => $ffMembership->id, 'label' => 'Weekly Membership', 'bonus_amount' => 0, 'price' => 28000, 'type' => 'weekly_pass']);
+        TopupDenomination::create(['topup_product_id' => $ffMembership->id, 'label' => 'Monthly Membership', 'bonus_amount' => 0, 'price' => 90000, 'type' => 'weekly_pass']);
 
         // Valorant Points
         $vpProduct = TopupProduct::where('name', 'Valorant Points')->first();
         $vpDenoms = [
-            ['label' => '475 VP', 'base_amount' => 475, 'bonus_amount' => 0, 'price' => 75000, 'type' => 'diamond'],
-            ['label' => '1000 VP', 'base_amount' => 1000, 'bonus_amount' => 0, 'price' => 150000, 'type' => 'diamond'],
-            ['label' => '2050 VP', 'base_amount' => 2050, 'bonus_amount' => 50, 'price' => 300000, 'badge' => 'POPULAR', 'type' => 'diamond'],
-            ['label' => '5350 VP', 'base_amount' => 5350, 'bonus_amount' => 150, 'price' => 750000, 'badge' => 'BEST VALUE', 'type' => 'diamond'],
+            ['label' => '475 VP', 'bonus_amount' => 0, 'price' => 75000, 'type' => 'points'],
+            ['label' => '1000 VP', 'bonus_amount' => 0, 'price' => 150000, 'type' => 'points'],
+            ['label' => '2050 VP', 'bonus_amount' => 50, 'price' => 300000, 'type' => 'points'],
+            ['label' => '5350 VP', 'bonus_amount' => 150, 'price' => 750000, 'type' => 'points'],
         ];
         foreach ($vpDenoms as $denom) {
             TopupDenomination::create([...$denom, 'topup_product_id' => $vpProduct->id]);
@@ -87,11 +87,11 @@ class TopupSeeder extends Seeder
 
         // Night Market Credits
         $nmProduct = TopupProduct::where('name', 'Night Market Credits')->first();
-        TopupDenomination::create(['topup_product_id' => $nmProduct->id, 'label' => 'Night Market Bundle', 'base_amount' => 200, 'bonus_amount' => 50, 'price' => 50000, 'type' => 'diamond']);
+        TopupDenomination::create(['topup_product_id' => $nmProduct->id, 'label' => 'Night Market Bundle', 'bonus_amount' => 50, 'price' => 50000, 'type' => 'points']);
 
         // EA FC Points
         $fcPoints = TopupProduct::where('name', 'FC Points')->first();
-        TopupDenomination::create(['topup_product_id' => $fcPoints->id, 'label' => '1050 FC Points', 'base_amount' => 1050, 'bonus_amount' => 0, 'price' => 160000, 'type' => 'diamond']);
-        TopupDenomination::create(['topup_product_id' => $fcPoints->id, 'label' => '2200 FC Points', 'base_amount' => 2200, 'bonus_amount' => 200, 'price' => 320000, 'badge' => 'BEST VALUE', 'type' => 'diamond']);
+        TopupDenomination::create(['topup_product_id' => $fcPoints->id, 'label' => '1050 FC Points', 'bonus_amount' => 0, 'price' => 160000, 'type' => 'points']);
+        TopupDenomination::create(['topup_product_id' => $fcPoints->id, 'label' => '2200 FC Points', 'bonus_amount' => 200, 'price' => 320000, 'type' => 'points']);
     }
 }

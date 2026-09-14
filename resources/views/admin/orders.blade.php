@@ -182,7 +182,7 @@
                                             <span class="font-mono font-medium text-text-primary">{{ $order->batch->match->teamA->tag ?? '?' }}</span>
                                             <span class="text-text-dim">vs</span>
                                             <span class="font-mono font-medium text-text-primary">{{ $order->batch->match->teamB->tag ?? '?' }}</span>
-                                            <span class="block text-text-dim">{{ $order->batch->tier_name ?? '' }}</span>
+                                            <span class="block text-text-dim">{{ $order->batch->venueZone->name ?? '' }}</span>
                                         @else
                                             —
                                         @endif
