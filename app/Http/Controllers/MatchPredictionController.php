@@ -37,9 +37,11 @@ class MatchPredictionController extends Controller
         return response()->json([
             'ok' => true,
             'team' => $validated['team'],
+            'a' => $a,
+            'b' => $b,
+            'total' => $total,
             'percentage_a' => $total ? (int) round(($a / $total) * 100) : 50,
             'percentage_b' => $total ? (int) round(($b / $total) * 100) : 50,
-            'total' => $total,
         ]);
     }
 }

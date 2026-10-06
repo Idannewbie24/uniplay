@@ -13,6 +13,8 @@ class HomeController extends Controller
 {
     public function index()
     {
+        GameMatch::where('scheduled_at', '<=', now())->delete();
+
         $featuredMatch = GameMatch::with([
             'tournament:id,name,stage,format',
             'teamA:id,name,tag,logo',
@@ -72,8 +74,8 @@ class HomeController extends Controller
                 ->selectRaw('SUM(CASE WHEN team = "b" THEN 1 ELSE 0 END) as b')
                 ->first();
 
-            $predA = $predCounts && $predCounts->total ? (int) round(($predCounts->a / $predCounts->total) * 100) : null;
-            $predB = $predCounts && $predCounts->total ? (int) round(($predCounts->b / $predCounts->total) * 100) : null;
+            $predA = $predCounts ? (int) $predCounts->a : 0;
+            $predB = $predCounts ? (int) $predCounts->b : 0;
 
             $myPrediction = auth()->check()
                 ? MatchPrediction::where('match_id', $featuredMatch->id)

@@ -153,6 +153,8 @@
                     {{-- Community Prediction --}}
                     <div class="mt-8" x-data="predictionVote({
                         matchId: {{ $match->id }},
+                        aTag: '{{ addcslashes($match->teamA->tag, "'") }}',
+                        bTag: '{{ addcslashes($match->teamB->tag, "'") }}',
                         a: {{ $predA ?? 'null' }},
                         b: {{ $predB ?? 'null' }},
                         my: {{ $myPrediction ? "'" . $myPrediction->team . "'" : 'null' }},
@@ -164,14 +166,20 @@
                         {{-- Selectable teams --}}
                         <div class="grid grid-cols-2 gap-2 mb-3">
                             <button type="button" @click="pick('a')"
-                                    class="px-3 py-2 rounded-lg border text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer"
-                                    :class="selected === 'a' ? 'border-primary bg-primary/15 text-primary' : 'border-border-hairline bg-surface-card text-text-secondary hover:border-primary/40'">
+                                    class="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer"
+                                    :class="my === 'a' || selected === 'a' ? 'border-primary bg-primary/15 text-primary' : 'border-border-hairline bg-surface-card text-text-secondary hover:border-primary/40'">
                                 {{ $match->teamA->tag }}
+                                <svg x-show="my === 'a'" class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
                             </button>
                             <button type="button" @click="pick('b')"
-                                    class="px-3 py-2 rounded-lg border text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer"
-                                    :class="selected === 'b' ? 'border-tertiary bg-tertiary/15 text-tertiary' : 'border-border-hairline bg-surface-card text-text-secondary hover:border-tertiary/40'">
+                                    class="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer"
+                                    :class="my === 'b' || selected === 'b' ? 'border-tertiary bg-tertiary/15 text-tertiary' : 'border-border-hairline bg-surface-card text-text-secondary hover:border-tertiary/40'">
                                 {{ $match->teamB->tag }}
+                                <svg x-show="my === 'b'" class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
                             </button>
                         </div>
 
@@ -203,10 +211,17 @@
                         <button type="button" @click="submit()"
                                 :disabled="!selected || submitting"
                                 class="mt-3 w-full py-2.5 rounded-lg bg-primary text-white font-display text-xs font-bold uppercase tracking-wider hover:bg-primary/90 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">
-                            <template x-if="!submitting && !my">Submit Prediction</template>
-                            <template x-if="!submitting && my">Change Vote</template>
+                            <template x-if="!submitting">
+                                <span x-text="voteLabel()"></span>
+                            </template>
                             <template x-if="submitting">Submitting...</template>
                         </button>
+                        <template x-if="my">
+                            <p class="mt-2 text-[10px] text-text-dim text-center">
+                                Your vote: <span class="font-semibold text-text-secondary" x-text="my === 'a' ? aTag : bTag"></span>
+                                <span x-show="!selected || selected === my">· pick the other team to change it</span>
+                            </p>
+                        </template>
                         <template x-if="guest">
                             <p class="mt-2 text-[10px] text-text-dim text-center">You'll be asked to sign in after picking a team.</p>
                         </template>
@@ -511,6 +526,8 @@
     function predictionVote(config) {
         return {
             matchId: config.matchId,
+            aTag: config.aTag,
+            bTag: config.bTag,
             a: config.a ?? 0,
             b: config.b ?? 0,
             my: config.my,
@@ -534,10 +551,26 @@
             total() {
                 return this.a + this.b;
             },
+            voteLabel() {
+                if (this.my) {
+                    const myTag = this.my === 'a' ? this.aTag : this.bTag;
+                    if (this.selected && this.selected !== this.my) {
+                        const newTag = this.selected === 'a' ? this.aTag : this.bTag;
+                        return 'Change Vote: ' + newTag;
+                    }
+                    return this.selected === this.my ? 'Your Pick: ' + myTag : 'Change Vote';
+                }
+                if (this.selected) {
+                    const tag = this.selected === 'a' ? this.aTag : this.bTag;
+                    return 'Submit Prediction: ' + tag;
+                }
+                return 'Submit Prediction';
+            },
             async submit() {
                 if (!this.selected || this.submitting) return;
                 if (this.guest) { window.location.href = this.loginUrl; return; }
                 this.submitting = true;
+                this.message = '';
                 try {
                     const res = await fetch('/predictions', {
                         method: 'POST',
@@ -550,10 +583,12 @@
                     });
                     const data = await res.json();
                     if (data.ok) {
-                        this.a = data.percentage_a;
-                        this.b = data.percentage_b;
+                        this.a = data.a;
+                        this.b = data.b;
                         this.my = this.selected;
                         this.message = 'Your vote has been submitted!';
+                    } else {
+                        this.message = 'Something went wrong. Please try again.';
                     }
                 } catch (e) {
                     this.message = 'Something went wrong. Please try again.';
